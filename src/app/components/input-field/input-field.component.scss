@@ -1,6 +1,6 @@
 input-field {
   --input-font-color: transparent;
-  --value-font-color: black;
+  --value-font-color: var(--color-devsu-500);
   --value-opacity: 1;
 
   position: relative;
@@ -10,7 +10,7 @@ input-field {
   .input-field {
     &__content {
       &--active {
-        --input-font-color: black;
+        --input-font-color: var(--color-devsu-500);
         --value-font-color: transparent;
       }
 

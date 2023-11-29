@@ -1,1 +1,127 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --background-devsu-500: rgba(255, 255, 255, 1);
+
+  --background-devsu-300: rgba(239, 242, 252, 1);
+
+  --background-devsu-100: rgba(221, 223, 237, 1);
+
+  --color-devsu-500: rgba(40, 50, 61, 1);
+
+  --color-devsu-300: rgba(98, 111, 155, 1);
+
+  --color-devsu-100: rgba(157, 165, 178, 1);
+
+  --border-devsu-500: 1px solid rgba(117, 125, 138, 1);
+
+  --color-warning-700: rgba(190, 128, 62, 1);
+
+  --color-warning-500: rgba(252, 165, 73, 1);
+
+  --color-warning-300: rgba(253, 202, 149, 1);
+
+  --border-warning-500: 1px solid rgba(252, 165, 73, 1);
+
+  --color-danger-700: rgba(185, 52, 52, 1);
+
+  --color-danger-500: rgba(244, 60, 60, 1);
+
+  --color-danger-300: rgba(248, 141, 141, 1);
+
+  --border-danger-500: 1px solid rgba(244, 60, 60, 1);
+}
+
+html {
+  font-size: 16px;
+}
+
+.box-field {
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__content {
+    --box-field-body-background: rgb(248, 248, 248, 1);
+    --box-field-label-color: var(--color-devsu-300);
+    --box-field-body-border: var(--border-devsu-500);
+    --box-field-body-shadow: none;
+
+    transition: height 160ms 0ms var(--standard-curve);
+    box-sizing: border-box;
+
+    &--active {
+      --box-field-body-background: var(--background-devsu-500);
+      --box-field-label-color: var(--color-warning-700);
+      --box-field-body-border: var(--border-warning-500);
+      --box-field-body-shadow: 0px 0px 0px 3px var(--box-shadow-xofttion-500);
+
+      .box-field__body {
+        box-shadow: var(--box-field-body-shadow);
+      }
+    }
+
+    &--error {
+      --box-field-label-color: var(--color-danger-500);
+      --box-field-body-border: var(--border-danger-500);
+      --box-field-body-shadow: 0px 0px 0px 3px var(--box-shadow-danger-500);
+    }
+
+    &--disabled {
+      --box-field-body-background: var(--background-devsu-500);
+
+      .box-field__label {
+        opacity: 0.5;
+      }
+
+      .box-field__body {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  &__label {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 0rem 0.625rem;
+    box-sizing: border-box;
+    margin-bottom: 0.25rem;
+    color: var(--box-field-label-color);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    min-height: 0.825rem;
+    line-height: 0.825rem;
+  }
+
+  &__body {
+    display: flex;
+    width: 100%;
+    float: left;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    background: var(--box-field-body-background);
+    border: var(--box-field-body-border);
+  }
+
+  &__helper {
+    color: var(--color-theme-100);
+    padding: 0rem 0.625rem;
+    box-sizing: border-box;
+    margin-top: var(--sizing-4);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--overline-size);
+    letter-spacing: var(--overline-letter-spacing);
+    min-height: var(--overline-line-height);
+    line-height: var(--overline-line-height);
+
+    &--error {
+      color: var(--color-danger-500);
+    }
+  }
+}
