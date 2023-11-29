@@ -5,8 +5,8 @@ import { InputFieldComponentModule } from '../input-field/input-field.component.
 import { TextFieldComponent } from './text-field.component';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, InputFieldComponentModule],
   declarations: [TextFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, InputFieldComponentModule],
   exports: [TextFieldComponent]
 })
 export class TextFieldComponentModule {}

@@ -1,4 +1,8 @@
+@import './assets/fonts/poppins';
+
 :root {
+  --font-devsu-size: 16px;
+
   --background-devsu-500: rgba(255, 255, 255, 1);
 
   --background-devsu-300: rgba(239, 242, 252, 1);
@@ -28,10 +32,39 @@
   --color-danger-300: rgba(248, 141, 141, 1);
 
   --border-danger-500: 1px solid rgba(244, 60, 60, 1);
+
+  --shadow-devsu-4: 0px 0px 4px 0px rgba(173, 186, 230, 0.4);
 }
 
 html {
-  font-size: 16px;
+  font-size: var(--font-devsu-size);
+  font-family: -devsu-system-font;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  margin: 0rem;
+  background: var(--background-devsu-100);
+}
+
+button {
+  background: var(--color-warning-500);
+  color: var(--color-devsu-500);
+  outline: none;
+  border: none;
+  font-family: -devsu-system-font;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background: var(--color-warning-700);
+  }
 }
 
 .box-field {
@@ -110,18 +143,20 @@ html {
   }
 
   &__helper {
-    color: var(--color-theme-100);
+    color: var(--color-danger-500);
     padding: 0rem 0.625rem;
     box-sizing: border-box;
     margin-top: var(--sizing-4);
-    font-weight: var(--font-weight-medium);
-    font-size: var(--overline-size);
-    letter-spacing: var(--overline-letter-spacing);
-    min-height: var(--overline-line-height);
-    line-height: var(--overline-line-height);
+    font-weight: 500;
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    min-height: 0.625rem;
+    line-height: 0.625rem;
+  }
+}
 
-    &--error {
-      color: var(--color-danger-500);
-    }
+@media screen and (min-width: 1280px) {
+  :root {
+    --font-devsu-size: 18px;
   }
 }

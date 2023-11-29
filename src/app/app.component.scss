@@ -1,0 +1,14 @@
+header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 5rem;
+  padding: 0.5rem 0rem;
+  box-shadow: var(--shadow-devsu-4);
+  background: var(--background-devsu-500);
+}
+
+section {
+  padding: 1rem;
+  box-sizing: border-box;
+}
