@@ -62,8 +62,12 @@ button {
   box-sizing: border-box;
   border-radius: 0.25rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: var(--color-warning-700);
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }
 

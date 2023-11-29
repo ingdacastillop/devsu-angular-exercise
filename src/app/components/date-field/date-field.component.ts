@@ -3,9 +3,11 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Renderer2,
+  SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 import {
@@ -13,7 +15,7 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { getDateFormat } from '@xofttion/utils';
+import { getDateFormat, isDefined } from '@xofttion/utils';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
 import {
   ModalComponentService,
@@ -39,7 +41,7 @@ interface DateFieldStatus {
   ]
 })
 export class DateFieldComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
+  implements OnInit, OnDestroy, OnChanges, ControlValueAccessor
 {
   @Input()
   public elementId?: string;
@@ -58,9 +60,6 @@ export class DateFieldComponent
 
   @Input()
   public maxDate?: Date;
-
-  @Input()
-  public xftTheme = 'none';
 
   private modal?: ModalOverlayComponent<DatePickerComponent>;
 
@@ -89,7 +88,6 @@ export class DateFieldComponent
   }
 
   public ngOnInit(): void {
-    console.log(this.ref)
     this.ref.nativeElement.classList.add('input-field');
     this.ref.nativeElement.classList.add('date-field');
 
@@ -97,17 +95,38 @@ export class DateFieldComponent
 
     this.setValue(this.dateControl.value);
 
-    this.modal.children.setTheme(this.xftTheme);
-
-    this.modal.addListener(({ value }) => {
+    this.modal.susbcribe(({ value }) => {
       if (value) {
         this.approvedValue(value);
       }
     });
+
+    this.modal?.send({ key: 'mindate', value: this.minDate });
+    this.modal?.send({ key: 'maxdate', value: this.maxDate });
   }
 
   public ngOnDestroy(): void {
     this.modal?.destroy();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['minDate']) {
+      this.modal?.send({
+        key: 'mindate',
+        value: changes['minDate'].currentValue
+      });
+    }
+
+    if (changes['maxDate']) {
+      this.modal?.send({
+        key: 'maxdate',
+        value: changes['maxDate'].currentValue
+      });
+    }
+  }
+
+  public get isDisabled(): boolean {
+    return !this.enabled || this.status.disabled;
   }
 
   public get iconAction(): string {
@@ -115,7 +134,9 @@ export class DateFieldComponent
   }
 
   public onClickInput(): void {
-    this.modal?.open();
+    if (!this.isDisabled) {
+      this.modal?.open();
+    }
   }
 
   public onFocus(): void {
@@ -127,19 +148,23 @@ export class DateFieldComponent
   }
 
   public onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Space':
-        this.modal?.open();
-        break;
+    if (!this.isDisabled) {
+      switch (event.code) {
+        case 'Space':
+          this.modal?.open();
+          break;
 
-      case 'Enter':
-        this.modal?.open();
-        break;
+        case 'Enter':
+          this.modal?.open();
+          break;
+      }
     }
   }
 
   public onClickAction() {
-    this.value ? this.approvedValue() : this.modal?.open();
+    if (!this.isDisabled) {
+      this.value ? this.approvedValue() : this.modal?.open();
+    }
   }
 
   private approvedValue(value?: Date): void {

@@ -1,9 +1,8 @@
 <div
   class="box-field__content"
   [class.box-field--active]="status.active"
-  [class.box-field--disabled]="status.disabled"
+  [class.box-field--disabled]="!enabled || status.disabled"
   [class.date-field--selected]="!!value"
-  [attr.theme]="xftTheme"
 >
   <label class="box-field__label" [for]="elementId" *ngIf="label">
     <ng-content></ng-content>

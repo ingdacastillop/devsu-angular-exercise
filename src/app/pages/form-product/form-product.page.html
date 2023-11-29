@@ -4,21 +4,29 @@
   </header>
 
   <section>
-    <text-field>ID</text-field>
+    <text-field [inputControl]="id">ID</text-field>
 
-    <text-field>Nombre</text-field>
+    <text-field [inputControl]="name">Nombre</text-field>
 
-    <text-field>Descripción</text-field>
+    <text-field [inputControl]="description">Descripción</text-field>
 
-    <text-field>Logo</text-field>
+    <text-field [inputControl]="logo">Logo</text-field>
 
-    <date-field>Fecha de liberación</date-field>
+    <date-field [formControl]="releaseDate" [maxDate]="today">
+      Fecha de liberación
+    </date-field>
 
-    <date-field>Fecha de revisión</date-field>
+    <date-field
+      [formControl]="revisionDate"
+      [minDate]="releaseDate.value"
+      [enabled]="releaseDate.value"
+    >
+      Fecha de revisión
+    </date-field>
   </section>
 
   <footer>
-    <button>Reiniciar</button>
-    <button>Enviar</button>
+    <button (click)="onReset()">Reiniciar</button>
+    <button (click)="onSubmit()" [disabled]="form.invalid">Enviar</button>
   </footer>
 </div>

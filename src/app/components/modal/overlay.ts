@@ -7,7 +7,7 @@ export interface OverlayEvent {
   value?: any;
 }
 
-type OverlayListener = (_: OverlayEvent) => void;
+type OverlayCallback = (_: OverlayEvent) => void;
 
 export class OverlayElement<E> {
   public readonly componentRef: ComponentRef<E>;
@@ -38,7 +38,9 @@ export class OverlayComponent<C, E> {
 
   public readonly children: E;
 
-  private listeners: Array<OverlayListener> = [];
+  private subscriptions: Array<OverlayCallback> = [];
+
+  private listeners: Array<OverlayCallback> = [];
 
   constructor(
     public readonly overlayParent: OverlayElement<C>,
@@ -48,12 +50,20 @@ export class OverlayComponent<C, E> {
     this.children = this.overlayChildren.componentRef.instance;
   }
 
-  public addListener(listener: OverlayListener): void {
-    this.listeners.push(listener);
+  public susbcribe(callback: OverlayCallback): void {
+    this.subscriptions.push(callback);
   }
 
   public emit(event: OverlayEvent): void {
-    this.listeners.forEach((listener) => listener(event));
+    this.subscriptions.forEach((suscriber) => suscriber(event));
+  }
+
+  public listener(callback: OverlayCallback): void {
+    this.listeners.push(callback);
+  }
+
+  public send(event: OverlayEvent): void {
+    this.listeners.forEach((suscriber) => suscriber(event));
   }
 
   public destroy(): void {

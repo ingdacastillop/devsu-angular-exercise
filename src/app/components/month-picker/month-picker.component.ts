@@ -4,7 +4,6 @@ import {
   forwardRef,
   Input,
   OnChanges,
-  OnInit,
   Renderer2,
   SimpleChanges,
   ViewEncapsulation

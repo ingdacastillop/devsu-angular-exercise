@@ -5,6 +5,7 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
   Output,
@@ -93,7 +94,10 @@ export class DatePickerComponent
 
   private onTouch = (_?: Date): void => undefined;
 
-  constructor(private changedDetectorRef: ChangeDetectorRef) {
+  constructor(
+    private changedDetectorRef: ChangeDetectorRef,
+    private ngZone: NgZone
+  ) {
     this.listener = new EventEmitter<DateListener>();
 
     this.value = new Date();
@@ -152,6 +156,19 @@ export class DatePickerComponent
 
   public ngOnOverlay(overlay: OverlayDatePicker): void {
     this.overlay = overlay;
+
+    overlay.listener(({ key, value }) => {
+      this.ngZone.run(() => {
+        switch (key) {
+          case 'mindate':
+            this.minDate = value;
+            break;
+          case 'maxdate':
+            this.maxDate = value;
+            break;
+        }
+      });
+    });
   }
 
   public get title(): string {
@@ -164,10 +181,6 @@ export class DatePickerComponent
 
   public get month(): string {
     return MONTHS_NAME[this.value.getMonth()];
-  }
-
-  public setTheme(xftTheme: string): void {
-    this.xftTheme = xftTheme;
   }
 
   public onClickDay(): void {
