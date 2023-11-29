@@ -17,9 +17,21 @@ export class FormProductPage {
 
   constructor(private router: Router, private products: ProductRepository) {
     this.form = new FormGroup({
-      id: new FormControl(null, [Validators.required]),
-      name: new FormControl(null, [Validators.required]),
-      description: new FormControl(null, [Validators.required]),
+      id: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10)
+      ]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(100)
+      ]),
+      description: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(200)
+      ]),
       logo: new FormControl(null, [Validators.required]),
       releaseDate: new FormControl(null, [Validators.required]),
       revisionDate: new FormControl(null, [Validators.required])

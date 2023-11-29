@@ -22,7 +22,9 @@
         (keydown)="onKeydownInput($event)"
       />
 
-      <button class="date-field__action" (click)="onClickAction()"></button>
+      <button class="date-field__action" (click)="onClickAction()">
+        <icon [value]="iconAction"></icon>
+      </button>
     </div>
   </div>
 </div>

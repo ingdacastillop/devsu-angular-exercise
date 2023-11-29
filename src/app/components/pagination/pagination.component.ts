@@ -71,7 +71,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
 
   private descriptionValue = '';
 
-  constructor(private paginationPipe: PaginationPipe) {
+  constructor(private paginationPipe: PaginationPipe<T>) {
     this.results = new EventEmitter<T[]>();
   }
 

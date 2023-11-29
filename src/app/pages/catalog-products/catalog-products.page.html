@@ -1,5 +1,12 @@
 <header>
-  <span>Listado de productos</span>
+  <div class="catalog-products__search">
+    <input-field
+      placeholder="Search..."
+      [formControl]="filterControl"
+    >
+    </input-field>
+  </div>
+
   <button (click)="goFormProductForCreate()">Agregar</button>
 </header>
 
@@ -31,7 +38,11 @@
   <pagination
     [suggestions]="(catalog || [])"
     [count]="5"
+    label="productos(s)"
+    [filter]="filterControl.value"
     (results)="onPagination($event)"
   >
   </pagination>
+
+  <div>Selector</div>
 </footer>

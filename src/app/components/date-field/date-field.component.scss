@@ -39,6 +39,11 @@ date-field {
       padding: 0rem;
       margin-left: 0.25rem;
       background: transparent;
+
+      &:hover {
+        color: var(--color-devsu-500);
+        background: transparent;
+      }
     }
   }
 }
