@@ -3,7 +3,7 @@ form-product-page {
 
   display: flex;
   justify-content: center;
-  padding: 1rem 0rem;
+  padding: 1.5rem 0rem;
 
   .form-product {
     &__card {
@@ -23,7 +23,7 @@ form-product-page {
         font-weight: 700;
         letter-spacing: 0.035em;
         border-bottom: var(--border-devsu-500);
-        padding-bottom: 1rem;
+        padding-bottom: 1.25rem;
         box-sizing: border-box;
       }
 
@@ -39,7 +39,7 @@ form-product-page {
         display: flex;
         justify-content: center;
         column-gap: 3rem;
-        padding-top: 0.5rem;
+        padding: 0.5rem 0rem;
         box-sizing: border-box;
       }
     }

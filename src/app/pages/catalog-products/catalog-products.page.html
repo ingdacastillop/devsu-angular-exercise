@@ -6,7 +6,7 @@
 <section>
   <table>
     <thead>
-      <th>Logo</th>
+      <th class="logo">Logo</th>
       <th>Nombre del producto</th>
       <th>Descripción</th>
       <th>Fecha de liberación</th>
@@ -14,12 +14,14 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td></td>
-        <td>Tarjeta de crédito</td>
-        <td>Sin descripción</td>
-        <td>01/01/2020</td>
-        <td>01/01/2021</td>
+      <tr *ngFor="let product of catalog">
+        <td class="logo">
+          <img [src]="product.logo" />
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.releaseDateFormat}}</td>
+        <td>{{product.revisionDateFormat}}</td>
       </tr>
     </tbody>
   </table>

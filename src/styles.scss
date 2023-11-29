@@ -15,7 +15,7 @@
 
   --color-devsu-100: rgba(157, 165, 178, 1);
 
-  --border-devsu-500: 1px solid rgba(117, 125, 138, 1);
+  --border-devsu-500: 1px solid rgba(98, 111, 155, 0.24);
 
   --color-warning-700: rgba(190, 128, 62, 1);
 
@@ -38,6 +38,7 @@
 
 html {
   font-size: var(--font-devsu-size);
+  color: var(--color-devsu-500);
   font-family: -devsu-system-font;
 }
 

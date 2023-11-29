@@ -3,9 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Product } from '../domain/entities';
 import { ProductRepository } from '../domain/repositories';
-import { firstValueFrom, tap } from 'rxjs';
+import { firstValueFrom, map, tap } from 'rxjs';
 
 const apiUrl = environment.apiUrl;
+
+interface ProductResponse {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  date_release: string;
+  date_revision: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class RemoteProductRepository implements ProductRepository {
@@ -14,9 +23,6 @@ export class RemoteProductRepository implements ProductRepository {
   constructor(private http: HttpClient) {}
 
   public register(product: Product): Promise<void> {
-    const [date_revision] = product.revisionDate.toISOString().split('T');
-    const [date_release] = product.releaseDate.toISOString().split('T');
-
     return firstValueFrom(
       this.http
         .post<void>(apiUrl, {
@@ -24,8 +30,8 @@ export class RemoteProductRepository implements ProductRepository {
           name: product.name,
           description: product.description,
           logo: product.logo,
-          date_release,
-          date_revision
+          date_release: product.releaseDateFormat,
+          date_revision: product.revisionDateFormat
         })
         .pipe(
           tap(() => {
@@ -40,7 +46,24 @@ export class RemoteProductRepository implements ProductRepository {
       return Promise.resolve(this.products);
     }
 
-    return Promise.resolve([]);
+    return firstValueFrom(
+      this.http.get<ProductResponse[]>(apiUrl).pipe(
+        map((responses) =>
+          responses.map(
+            (response) =>
+              new Product(
+                response.id,
+                response.name,
+                response.description,
+                response.logo,
+                new Date(response.date_release),
+                new Date(response.date_revision)
+              )
+          )
+        ),
+        tap((products) => (this.products = products))
+      )
+    );
   }
 
   public update(product: Product): Promise<void> {
