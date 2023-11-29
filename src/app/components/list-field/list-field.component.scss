@@ -1,0 +1,236 @@
+.list-field {
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+
+  .box-field {
+    &__body {
+      padding: 0.375rem 0.5rem;
+    }
+  }
+
+  &__control {
+    position: relative;
+    float: left;
+    width: calc(100% - 1.625rem);
+    height: 1.5rem;
+    line-height: 1.5rem;
+    padding: 0rem;
+    cursor: text;
+    border: none;
+    outline: none;
+    color: var(--color-devsu-500);
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    &::placeholder {
+      color: var(--color-devsu-100);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    &__placeholder {
+      position: relative;
+      float: left;
+      color: var(--color-devsu-100);
+    }
+  }
+
+  &__action {
+    color: var(--color-devsu-300);
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0rem;
+    margin-left: 0.25rem;
+    outline: none;
+    background: transparent;
+  }
+
+  &__suggestions {
+    position: absolute;
+    top: 4rem;
+    left: 0rem;
+    width: 100%;
+    height: 0rem;
+    overflow: hidden;
+    z-index: 4;
+
+    &--hide {
+      .list-field__ul {
+        opacity: 0;
+        transform: scale(0, 0);
+      }
+    }
+
+    &--show {
+      overflow: initial;
+      opacity: 1;
+      height: auto;
+
+      .list-field__ul {
+        height: auto;
+        opacity: 1;
+        transform: scale(1, 1);
+      }
+    }
+
+    &--higher {
+      top: initial;
+      bottom: 2.75rem;
+
+      .list-field__ul {
+        transform-origin: 0% 100%;
+      }
+    }
+
+    &--sheet {
+      display: flex;
+      justify-content: center;
+
+      &.list-field__suggestions--show {
+        position: fixed;
+        top: 0rem;
+        left: 0rem;
+        height: 100%;
+        z-index: 32;
+
+        .list-field__ul {
+          transform: translateY(0%);
+        }
+
+        .list-field__backdrop {
+          bottom: 0rem;
+          opacity: 0.86;
+        }
+      }
+
+      .list-field__ul {
+        position: absolute;
+        bottom: 0rem;
+        width: 100%;
+        max-width: 25rem;
+        min-height: 50%;
+        max-height: 75%;
+        transform-origin: initial;
+        transform: translateY(100%);
+        border-radius: 0.5rem 0.5rem 0rem 0rem;
+      }
+
+      .list-field__empty {
+        flex-direction: column;
+        margin: auto;
+
+        &__avatar {
+          width: 100%;
+          height: auto;
+          max-width: 128px;
+          margin: auto;
+          padding-bottom: 0.75rem;
+        }
+
+        &__description {
+          width: 100%;
+          padding-left: 0rem;
+
+          label {
+            text-align: center;
+            margin-top: 0.25rem;
+          }
+        }
+      }
+    }
+  }
+
+  &__ul {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 100%;
+    height: 0rem;
+    opacity: 0;
+    padding: 0.5rem 0rem;
+    margin: 0;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 2;
+    background: var(--background-devsu-500);
+    box-shadow: var(--shadow-devsu-8);
+    will-change: opacity, transform;
+    transform-origin: 0% 0%;
+    transition: transform 240ms 0ms cubic-bezier(0.075, 0.82, 0.165, 1),
+      opacity 240ms 0ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &__element {
+    padding: 0rem 0.25rem;
+    box-sizing: border-box;
+    outline: none;
+
+    &:hover {
+      background: var(--background-devsu-100);
+    }
+
+    .ballot {
+      &__subtitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__empty {
+    display: flex;
+    padding: 0rem 0.75rem;
+    box-sizing: border-box;
+
+    &__avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &__description {
+      width: calc(100% - 2.5rem);
+      padding-left: 0.75rem;
+      box-sizing: border-box;
+
+      label {
+        display: block;
+        float: left;
+        width: 100%;
+
+        &.caption-regular {
+          color: var(--color-devsu-100);
+          white-space: initial;
+        }
+      }
+    }
+  }
+
+  &__backdrop {
+    position: absolute;
+    display: block;
+    top: 0rem;
+    left: 0rem;
+    right: 0rem;
+    bottom: initial;
+    opacity: 0;
+    z-index: 1;
+    will-change: opacity;
+    background: var(--color-warning-700);
+    transition: opacity 120ms 0ms cubic-bezier(0.075, 0.82, 0.165, 1),
+      bottom 120ms 0ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+}

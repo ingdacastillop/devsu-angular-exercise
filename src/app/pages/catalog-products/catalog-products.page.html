@@ -1,9 +1,6 @@
 <header>
   <div class="catalog-products__search">
-    <input-field
-      placeholder="Search..."
-      [formControl]="filterControl"
-    >
+    <input-field placeholder="Search..." [formControl]="filterControl">
     </input-field>
   </div>
 
@@ -18,6 +15,7 @@
       <th>Descripción</th>
       <th>Fecha de liberación</th>
       <th>Fecha de reestructuración</th>
+      <th class="action"></th>
     </thead>
 
     <tbody>
@@ -29,6 +27,9 @@
         <td>{{product.description}}</td>
         <td>{{product.releaseDateFormat}}</td>
         <td>{{product.revisionDateFormat}}</td>
+        <td class="action">
+          <icon value="more-vertical"></icon>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -37,12 +38,15 @@
 <footer>
   <pagination
     [suggestions]="(catalog || [])"
-    [count]="5"
+    [count]="counterControl.value"
     label="productos(s)"
     [filter]="filterControl.value"
     (results)="onPagination($event)"
   >
   </pagination>
 
-  <div>Selector</div>
+  <div>
+    <select-field [suggestions]="counters" [formControl]="counterControl">
+    </select-field>
+  </div>
 </footer>

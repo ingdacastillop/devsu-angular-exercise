@@ -1,0 +1,49 @@
+ballot {
+  position: relative;
+  float: left;
+  width: 100%;
+  overflow: hidden;
+
+  .ballot {
+    &__content {
+      display: flex;
+      padding: 0.5rem;
+      box-sizing: border-box;
+    }
+
+    &__avatar {
+      line-height: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: auto 0rem;
+
+      & + .ballot__component {
+        width: calc(100% - 3.5rem);
+        margin-left: 0.5rem;
+      }
+    }
+
+    &__component {
+      overflow: hidden;
+      margin: auto;
+    }
+
+    &__title {
+      position: relative;
+      float: left;
+      width: 100%;
+      color: var(--color-devsu-500);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &__subtitle {
+      position: relative;
+      float: left;
+      width: 100%;
+      color: var(--color-devsu-300);
+      margin-top: 0.25rem;
+    }
+  }
+}

@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
+  IconComponentModule,
   InputFieldComponentModule,
-  PaginationComponentModule
+  PaginationComponentModule,
+  SelectFieldComponentModule
 } from '../../components';
 import { CatalogProductsPage } from './catalog-products.page';
 import { CatalogProductsPageRouting } from './catalog-products.page.routing';
@@ -15,6 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     CatalogProductsPageRouting,
     InputFieldComponentModule,
+    IconComponentModule,
+    SelectFieldComponentModule,
     PaginationComponentModule
   ],
   exports: [CatalogProductsPage]

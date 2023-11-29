@@ -40,7 +40,7 @@ catalog-products-page {
 
     th,
     td {
-      padding: 0.25rem;
+      padding: 0.325rem 0.25rem;
       box-sizing: border-box;
       width: 100%;
       text-align: left;
@@ -49,9 +49,15 @@ catalog-products-page {
     th {
       font-size: 0.95rem;
       font-weight: 600;
+      width: calc(25% - 2rem);
 
       &.logo {
         text-align: center;
+        width: 4.5rem;
+      }
+
+      &.action {
+        width: 3.5rem;
       }
     }
 
@@ -59,11 +65,26 @@ catalog-products-page {
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--color-devsu-300);
+      width: calc(25% - 2rem);
 
       &.logo {
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 4.5rem;
+      }
+
+      &.action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3.5rem;
+
+        icon {
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
 
       img {

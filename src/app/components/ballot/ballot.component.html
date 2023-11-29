@@ -1,0 +1,15 @@
+<div
+  class="ballot__content"
+  [class.ballot__content--bordered]="bordered"
+  [class.ballot__content--skeleton]="skeleton"
+>
+  <div class="ballot__component">
+    <label class="ballot__title body-medium">
+      <ng-content></ng-content>
+    </label>
+
+    <label class="ballot__subtitle smalltext-semibold" *ngIf="subtitle">
+      {{ subtitle }}
+    </label>
+  </div>
+</div>

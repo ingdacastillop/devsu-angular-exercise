@@ -15,6 +15,8 @@ export * from './month-picker/month-picker.component';
 export * from './month-picker/month-picker.component.module';
 export * from './pagination/pagination.component';
 export * from './pagination/pagination.component.module';
+export * from './select-field/select-field.component';
+export * from './select-field/select-field.component.module';
 export * from './text-field/text-field.component';
 export * from './text-field/text-field.component.module';
 export * from './year-picker/year-picker.component';
