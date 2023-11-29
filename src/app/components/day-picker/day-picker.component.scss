@@ -1,0 +1,79 @@
+day-picker {
+  position: relative;
+  float: left;
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+
+  .day-picker {
+    &__content {
+      width: 100%;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    &__header {
+      display: flex;
+      margin-bottom: 0.5rem;
+      background: var(--background-devsu-100);
+      color: var(--color-devsu-500);
+    }
+
+    &__label {
+      width: 100%;
+      padding: 0.75rem 0rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    &__week {
+      display: flex;
+    }
+
+    &__day {
+      width: 100%;
+      text-align: center;
+      padding: 0.125rem;
+      box-sizing: border-box;
+
+      &__span {
+        position: relative;
+        display: block;
+        color: var(--color-devsu-500);
+        border-radius: 0.5rem;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        margin: 0.125rem 0rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+
+        &:hover {
+          color: white;
+          background: var(--color-devsu-500);
+        }
+      }
+
+      &--selected {
+        .day-picker__day__span:not(:hover) {
+          color: var(--color-devsu-500);
+          background: var(--color-warning-700);
+        }
+      }
+
+      &--forbidden {
+        pointer-events: none;
+        opacity: 0.5;
+
+        span {
+          background: var(--background-devsu-100);
+        }
+      }
+
+      &--disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+    }
+  }
+}

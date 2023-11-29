@@ -1,0 +1,24 @@
+<div class="day-picker__content">
+  <div class="day-picker__header">
+    <div class="day-picker__label" *ngFor="let dayLabel of titles">
+      {{ dayLabel }}
+    </div>
+  </div>
+
+  <div class="day-picker__component">
+    <div class="day-picker__week" *ngFor="let week of weeks">
+      <div
+        class="day-picker__day"
+        *ngFor="let day of week.days"
+        [class.day-picker__day--selected]="isSelected(day)"
+        [class.day-picker__day--forbidden]="day.status.forbidden"
+        [class.day-picker__day--disabled]="day.status.disabled"
+        (click)="onClickDay(day)"
+      >
+        <span class="day-picker__day__span">
+          {{ day.value || '??' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div
+  class="year-picker__content"
+  [class.year-picker__content--disabled]="status.disabled"
+>
+  <div class="year-picker__header">
+    <div class="year-picker__action year-picker__action--prev">
+      <button [disabled]="isPrevDisabled" (click)="onClickPrev()"></button>
+    </div>
+
+    <div class="year-picker__title">
+      <label class="title1-bold">{{ minYearRange }} - {{ maxYearRange }}</label>
+    </div>
+
+    <div class="year-picker__action year-picker__action--next">
+      <button [disabled]="isNextDisabled" (click)="onClickNext()"></button>
+    </div>
+  </div>
+
+  <div class="year-picker__component">
+    <div
+      *ngFor="let year of years"
+      class="year-picker__year"
+      [class.year-picker__year--selected]="year.status.selected"
+      [class.year-picker__year--disabled]="year.status.disabled"
+      (click)="onClickYear(year)"
+    >
+      <span class="year-picker__year__span body1-medium">
+        {{ year.value || '????' }}
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="modal__content" [class.modal__content--show]="show">
+  <div class="modal__component" [class.modal__component--show]="show">
+    <ng-content></ng-content>
+  </div>
+
+  <div
+    class="modal__backdrop"
+    [class.modal__backdrop--show]="show"
+  ></div>
+</div>

@@ -1,0 +1,48 @@
+date-field {
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+
+  .date-field {
+    .box-field {
+      &__body {
+        padding: var(--sizing-6) var(--sizing-8);
+      }
+    }
+
+    &__control {
+      position: relative;
+      float: left;
+      width: calc(100% - var(--sizing-28));
+      height: var(--sizing-24);
+      line-height: var(--sizing-24);
+      padding: 0rem;
+      cursor: default;
+      border: none;
+      outline: none;
+      color: var(--color-theme-500);
+      background: transparent;
+      font-size: var(--body-size);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--body-letter-spacing);
+
+      &::placeholder {
+        color: var(--color-theme-100);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+
+    &__action {
+      color: var(--color-theme-300);
+      width: var(--sizing-24);
+      height: var(--sizing-24);
+      padding: 0rem;
+      margin-left: var(--sizing-4);
+      background: transparent;
+    }
+  }
+}

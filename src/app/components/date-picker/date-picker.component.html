@@ -1,0 +1,75 @@
+<div class="date-picker__content" [attr.theme]="xftTheme">
+  <div class="date-picker__header">
+    <div class="date-picker__title date-picker__title--description">
+      <span (click)="onClickDay()">
+        {{ title }}
+      </span>
+    </div>
+    <div class="date-picker__title date-picker__title--year">
+      <span (click)="onClickYear()">
+        {{ year }}
+      </span>
+    </div>
+    <div class="date-picker__title date-picker__title--month">
+      <span (click)="onClickMonth()">
+        {{ month }}
+      </span>
+    </div>
+  </div>
+
+  <div class="date-picker__component" [formGroup]="date">
+    <day-picker
+      [formControl]="date.day"
+      [date]="value"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [hidden]="!visibility.day"
+    >
+    </day-picker>
+
+    <month-picker
+      [formControl]="date.month"
+      [date]="value"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [hidden]="!visibility.month"
+    >
+    </month-picker>
+
+    <year-picker
+      [formControl]="date.year"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [hidden]="!visibility.year"
+    >
+    </year-picker>
+  </div>
+
+  <div
+    class="date-picker__footer"
+    [class.date-picker__footer--hidden]="automatic"
+  >
+    <div class="date-picker__actions">
+      <button
+        class="date-picker__button date-picker__button--cancel"
+        (click)="onCancel()"
+      >
+        <span>Cancelar</span>
+      </button>
+
+      <button
+        class="date-picker__button date-picker__button--today"
+        (click)="onToday()"
+      >
+        <span>Hoy</span>
+      </button>
+
+      <button
+        class="date-picker__button date-picker__button--ok"
+        (click)="onSelect()"
+      >
+        <span>Establecer</span>
+      </button>
+    </div>
+  </div>
+</div>

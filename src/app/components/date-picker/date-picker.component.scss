@@ -1,0 +1,90 @@
+date-picker {
+  position: relative;
+  float: left;
+
+  .date-picker {
+    &__content {
+      max-width: 18.75rem;
+      overflow: hidden;
+    }
+
+    &__header {
+      background: var(--background-devsu-300);
+      padding: 0.5rem;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+    }
+
+    &__title {
+      color: var(--color-devsu-500);
+      text-align: center;
+      cursor: default;
+      font-weight: 700;
+
+      &:hover {
+        color: var(--color-warning-700);
+      }
+
+      &--description {
+        height: 2.25rem;
+        line-height: 2.25rem;
+        font-size: 1.15rem;
+      }
+
+      &--year {
+        margin: 0.5rem 0rem 0.25rem 0rem;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        font-size: var(--sizing-24);
+        color: var(--color-devsu-300);
+      }
+
+      &--month {
+        height: var(--sizing-28);
+        line-height: var(--sizing-28);
+        font-size: var(--sizing-20);
+        color: var(--color-devsu-300);
+      }
+    }
+
+    &__component {
+      display: flex;
+      padding: 0rem 0.25rem;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+
+      & > * {
+        margin: 0rem auto;
+      }
+    }
+
+    &__footer {
+      &--hidden {
+        display: none;
+      }
+    }
+
+    &__actions {
+      padding: 0.5rem 1rem 0.75rem 1rem;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    &__button {
+      &--cancel {
+        width: calc(50% - 0.25rem);
+        margin-right: 0.25rem;
+      }
+
+      &--today {
+        width: calc(50% - 0.25rem);
+        margin-left: 0.25rem;
+      }
+
+      &--ok {
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="month-picker__content">
+  <div
+    class="month-picker__component"
+    *ngFor="let month of months"
+    (click)="onClickMonth(month)"
+    [class.month-picker__component--selected]="isSelected(month)"
+    [class.month-picker__component--disabled]="isDisabled(month)"
+  >
+    <span class="month-picker__component__span">
+      {{ month.label }}
+    </span>
+  </div>
+</div>
