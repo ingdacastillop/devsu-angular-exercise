@@ -49,6 +49,11 @@ body {
   height: 100vh;
   margin: 0rem;
   background: var(--background-devsu-100);
+  overflow: hidden;
+}
+
+app-root {
+  overflow: auto;
 }
 
 button {

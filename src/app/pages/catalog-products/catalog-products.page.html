@@ -14,7 +14,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let product of catalog">
+      <tr *ngFor="let product of results">
         <td class="logo">
           <img [src]="product.logo" />
         </td>
@@ -27,4 +27,11 @@
   </table>
 </section>
 
-<footer></footer>
+<footer>
+  <pagination
+    [suggestions]="(catalog || [])"
+    [count]="5"
+    (results)="onPagination($event)"
+  >
+  </pagination>
+</footer>

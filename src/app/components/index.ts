@@ -11,6 +11,8 @@ export * from './modal/modal.component.module';
 export * from './modal/modal.component.service';
 export * from './month-picker/month-picker.component';
 export * from './month-picker/month-picker.component.module';
+export * from './pagination/pagination.component';
+export * from './pagination/pagination.component.module';
 export * from './text-field/text-field.component';
 export * from './text-field/text-field.component.module';
 export * from './year-picker/year-picker.component';

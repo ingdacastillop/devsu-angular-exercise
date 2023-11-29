@@ -12,10 +12,16 @@ import { ProductRepository } from '../../domain/repositories';
 export class CatalogProductsPage implements OnInit {
   protected catalog?: Product[];
 
+  protected results: Product[] = [];
+
   constructor(private router: Router, private products: ProductRepository) {}
 
   public ngOnInit(): void {
     this.products.fetchAll().then((products) => (this.catalog = products));
+  }
+
+  public onPagination(products: Product[]): void {
+    this.results = products;
   }
 
   public goFormProductForCreate(): void {

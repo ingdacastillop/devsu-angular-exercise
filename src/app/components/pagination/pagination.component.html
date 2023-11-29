@@ -1,0 +1,37 @@
+<div class="pagination__content">
+  <div class="pagination__pages" [hidden]="isEmpty">
+    <div
+      class="pagination__page"
+      *ngFor="let page of pages"
+      [class.pagination__page--active]="page.status.active"
+      (click)="onClickPage(page)"
+    >
+      {{ page.label }}
+    </div>
+  </div>
+
+  <div class="pagination__description">{{ description }}</div>
+
+  <div class="pagination__actions">
+    <button
+      class="pagination__action button__action"
+      [disabled]="isFirstPage"
+      (click)="onClickFirst()"
+    ></button>
+    <button
+      class="pagination__action button__action"
+      [disabled]="isFirstPage"
+      (click)="onClickPrev()"
+    ></button>
+    <button
+      class="pagination__action button__action"
+      [disabled]="isLastPage"
+      (click)="onClickNext()"
+    ></button>
+    <button
+      class="pagination__action button__action"
+      [disabled]="isLastPage"
+      (click)="onClickLast()"
+    ></button>
+  </div>
+</div>
