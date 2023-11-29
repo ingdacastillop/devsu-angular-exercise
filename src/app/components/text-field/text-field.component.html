@@ -1,0 +1,29 @@
+<div
+  class="box-field__content"
+  [class.box-field__content--active]="status.active"
+  [class.box-field__content--error]="status.error"
+  [class.box-field__content--disabled]="status.disabled"
+>
+  <label class="box-field__label" [for]="elementId">
+    <ng-content></ng-content>
+  </label>
+
+  <div class="box-field__component">
+    <div class="box-field__body">
+      <input-field
+        class="box-field__control"
+        [elementId]="elementId"
+        [type]="type"
+        [placeholder]="placeholder"
+        (status)="onStatus($event)"
+        [formControl]="inputControl"
+      >
+        {{ inputControl.value }}
+      </input-field>
+    </div>
+  </div>
+
+  <div class="box-field__helper box-field__helper--error" *ngIf="status.error">
+    <span>{{ status.error }}</span>
+  </div>
+</div>

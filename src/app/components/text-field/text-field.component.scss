@@ -1,0 +1,25 @@
+/*!
+ * Xofttion TextField Component
+ * v1.0.0
+ * @license MIT
+ * Author: Xofttion Developers
+ * Created: 20/Mar/2018
+ * Updated: 08/Sep/2022
+*/
+
+.xft-text-field {
+  position: relative;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+
+  .xft-box-field {
+    &__body {
+      .xft-input-field {
+        width: 100%;
+        padding: var(--sizing-6) var(--sizing-8);
+        box-sizing: border-box;
+      }
+    }
+  }
+}
