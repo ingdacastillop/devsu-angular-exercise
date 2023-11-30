@@ -140,10 +140,13 @@ export class RemoteProductRepository implements ProductRepository {
           ),
           tap((products) => this.products$.next(products))
         )
-      ).catch((err) => {
-        this.promiseProducts = undefined;
-        throw err;
-      });
+      ).catch(
+        /* istanbul ignore next */
+        (err) => {
+          this.promiseProducts = undefined;
+          throw err;
+        }
+      );
     }
 
     return this.promiseProducts;

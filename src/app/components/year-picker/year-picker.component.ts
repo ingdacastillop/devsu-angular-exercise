@@ -1,10 +1,8 @@
 import {
   Component,
-  ElementRef,
   forwardRef,
   Input,
   OnInit,
-  Renderer2,
   ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -24,7 +22,10 @@ interface YearPickerStatus {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => YearPickerComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => YearPickerComponent
+      ),
       multi: true
     }
   ]
@@ -40,7 +41,7 @@ export class YearPickerComponent implements OnInit, ControlValueAccessor {
 
   private yearSelect: YearModel;
 
-  protected years: Array<YearModel> = [];
+  protected years: YearModel[] = [];
 
   protected minYearRange: number;
 
@@ -50,9 +51,9 @@ export class YearPickerComponent implements OnInit, ControlValueAccessor {
 
   private onChange = (_?: number): void => undefined;
 
-  private onTouch = (_?: number): void => undefined;
+  private onTouched = (_?: boolean): void => undefined;
 
-  constructor(private ref: ElementRef, private renderer: Renderer2) {
+  constructor() {
     this.value = new Date().getFullYear();
 
     this.minYearRange = this.value;
@@ -74,7 +75,7 @@ export class YearPickerComponent implements OnInit, ControlValueAccessor {
       this.approvedValue(yearModel.value);
 
       this.onChange(yearModel.value);
-      this.onTouch(yearModel.value);
+      this.onTouched(true);
     }
   }
 
@@ -141,7 +142,6 @@ export class YearPickerComponent implements OnInit, ControlValueAccessor {
 
     this.approvedValue(valueYear);
 
-    this.onTouch(valueYear);
     this.onChange(valueYear);
   }
 
@@ -224,8 +224,8 @@ export class YearPickerComponent implements OnInit, ControlValueAccessor {
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: number) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {

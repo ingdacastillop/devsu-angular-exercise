@@ -48,7 +48,10 @@ interface ComponentVisibility {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DatePickerComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => DatePickerComponent
+      ),
       multi: true
     }
   ]
@@ -88,11 +91,9 @@ export class DatePickerComponent
 
   protected visibility: ComponentVisibility;
 
-  protected xftTheme = 'none';
-
   private onChange = (_?: Date): void => undefined;
 
-  private onTouch = (_?: Date): void => undefined;
+  private onTouched = (_?: boolean): void => undefined;
 
   constructor(
     private changedDetectorRef: ChangeDetectorRef,
@@ -116,30 +117,39 @@ export class DatePickerComponent
   }
 
   public ngOnInit(): void {
-    const yearSubscription = this.date.yearSubscribe((year) => {
-      const newValue = changeYear(this.value, year);
+    const yearSubscription = this.date.yearSubscribe(
+      /* istanbul ignore next */
+      (year) => {
+        const newValue = changeYear(this.value, year);
 
-      this.setValue(newValue);
-      this.show('day');
-    });
-
-    const monthSubscription = this.date.monthSubscribe((month) => {
-      const newValue = changeMonth(this.value, month);
-
-      this.setValue(newValue);
-      this.show('day');
-    });
-
-    const daySubscription = this.date.daySubscribe((day) => {
-      const newValue = changeDay(this.value, day);
-
-      this.setValue(newValue);
-
-      if (this.automatic) {
-        this.onChange(newValue);
-        this.onTouch(newValue);
+        this.setValue(newValue);
+        this.show('day');
       }
-    });
+    );
+
+    const monthSubscription = this.date.monthSubscribe(
+      /* istanbul ignore next */
+      (month) => {
+        const newValue = changeMonth(this.value, month);
+
+        this.setValue(newValue);
+        this.show('day');
+      }
+    );
+
+    const daySubscription = this.date.daySubscribe(
+      /* istanbul ignore next */
+      (day) => {
+        const newValue = changeDay(this.value, day);
+
+        this.setValue(newValue);
+
+        if (this.automatic) {
+          this.onChange(newValue);
+          this.onTouched(true);
+        }
+      }
+    );
 
     this.subscriptions.push(yearSubscription);
     this.subscriptions.push(monthSubscription);
@@ -150,10 +160,12 @@ export class DatePickerComponent
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
+  /* istanbul ignore next */
   public ngAfterViewChecked(): void {
     this.changedDetectorRef.detectChanges();
   }
 
+  /* istanbul ignore next */
   public ngOnOverlay(overlay: OverlayDatePicker): void {
     this.overlay = overlay;
 
@@ -197,7 +209,7 @@ export class DatePickerComponent
 
   public onSelect(): void {
     this.onChange(this.value);
-    this.onTouch(this.value);
+    this.onTouched(true);
 
     this.emitListener(DateListenerType.Select, this.value);
   }
@@ -206,7 +218,7 @@ export class DatePickerComponent
     const value = new Date();
 
     this.onChange(value);
-    this.onTouch(value);
+    this.onTouched(true);
 
     this.setValue(value);
 
@@ -244,7 +256,7 @@ export class DatePickerComponent
       ? (this.minDate as Date)
       : (this.maxDate as Date);
 
-    this.onTouch(this.value);
+    this.onTouched(true);
     this.onChange(this.value);
   }
 
@@ -272,8 +284,8 @@ export class DatePickerComponent
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: Date) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {

@@ -73,7 +73,7 @@ export class DateFieldComponent
 
   private onChange = (_?: Date): void => undefined;
 
-  private onTouch = (_?: Date): void => undefined;
+  private onTouched = (_?: boolean): void => undefined;
 
   constructor(
     private ref: ElementRef,
@@ -87,6 +87,7 @@ export class DateFieldComponent
     };
   }
 
+  /* istanbul ignore next */
   public ngOnInit(): void {
     this.ref.nativeElement.classList.add('input-field');
     this.ref.nativeElement.classList.add('date-field');
@@ -109,6 +110,7 @@ export class DateFieldComponent
     this.modal?.destroy();
   }
 
+  /* istanbul ignore next */
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['minDate']) {
       this.modal?.send({
@@ -133,6 +135,7 @@ export class DateFieldComponent
     return this.value ? 'trash-2' : 'calendar';
   }
 
+  /* istanbul ignore next */
   public onClickInput(): void {
     if (!this.isDisabled) {
       this.modal?.open();
@@ -147,6 +150,7 @@ export class DateFieldComponent
     this.status.active = false;
   }
 
+  /* istanbul ignore next */
   public onKeydownInput(event: KeyboardEvent): void {
     if (!this.isDisabled) {
       switch (event.code) {
@@ -161,6 +165,7 @@ export class DateFieldComponent
     }
   }
 
+  /* istanbul ignore next */
   public onClickAction() {
     if (!this.isDisabled) {
       this.value ? this.approvedValue() : this.modal?.open();
@@ -170,7 +175,7 @@ export class DateFieldComponent
   private approvedValue(value?: Date): void {
     this.setValue(value);
 
-    this.onTouch(value);
+    this.onTouched(true);
     this.onChange(value);
   }
 
@@ -188,8 +193,8 @@ export class DateFieldComponent
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: Date) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {

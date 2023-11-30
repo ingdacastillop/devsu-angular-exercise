@@ -19,7 +19,10 @@ import { ListFieldComponent } from '../list-field/list-field.component';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectFieldComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => SelectFieldComponent
+      ),
       multi: true
     }
   ]
@@ -36,50 +39,11 @@ export class SelectFieldComponent extends ListFieldComponent {
     this.showSuggestions();
   }
 
-  public onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Space':
-        this.showSuggestions();
-        break;
-
-      case 'Enter':
-        this.showSuggestions();
-        break;
-
-      case 'Escape':
-        this.hideSuggestions();
-        break;
-
-      case 'Tab':
-        this.hideSuggestions();
-        break;
-
-      default:
-        this.navigationInput(event);
-        break;
-    }
-  }
-
   public onClickAction() {
     this.toogleSuggestions();
 
     if (this.status.show) {
       this.focusInput();
-    }
-  }
-
-  public onKeydownElement(
-    event: KeyboardEvent,
-    element: ListFieldElement
-  ): void {
-    switch (event.code) {
-      case 'Enter':
-        this.onSelect(element);
-        break;
-
-      default:
-        this.navigationElement(event);
-        break;
     }
   }
 

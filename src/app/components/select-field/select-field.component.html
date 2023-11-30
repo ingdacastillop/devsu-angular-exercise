@@ -15,7 +15,6 @@
         (focus)="onFocus()"
         (blur)="onBlur()"
         (click)="onClickInput()"
-        (keydown)="onKeydownInput($event)"
       />
 
       <button
@@ -32,7 +31,7 @@
       class="list-field__suggestions"
       [class.list-field__suggestions--show]="status.show"
       [class.list-field__suggestions--hide]="status.hide"
-      [class.list-field__suggestions--higher]="isHigher"
+      [class.list-field__suggestions--higher]="true"
       [class.list-field__suggestions--sheet]="sheetMode"
     >
       <ul class="list-field__ul">
@@ -41,7 +40,6 @@
           class="list-field__element"
           tabindex="-1"
           (click)="onSelect(element)"
-          (keydown)="onKeydownElement($event, element)"
         >
           {{ element?.title }}
         </ballot>

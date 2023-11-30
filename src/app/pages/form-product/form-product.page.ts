@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { changeYear } from '@xofttion/utils';
 import { Subscription, take } from 'rxjs';
 import { Product } from '../../domain/entities';
 import { ProductRepository } from '../../domain/repositories';
-import { changeYear } from '@xofttion/utils';
 
 @Component({
   selector: 'form-product-page',

@@ -6,5 +6,9 @@
     "types": ["jasmine"]
   },
   "files": ["src/test.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+  "include": [
+    "node_modules/@xofttion/types/index.d.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
 }

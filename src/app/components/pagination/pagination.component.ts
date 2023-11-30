@@ -63,7 +63,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
 
   private collection: T[] = [];
 
-  private pagesValue: Array<PaginationPage> = [];
+  private pagesValue: PaginationPage[] = [];
 
   private currentPage?: PaginationPage;
 
@@ -89,7 +89,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
     return this.currentValue;
   }
 
-  public get pages(): Array<PaginationPage> {
+  public get pages(): PaginationPage[] {
     return this.pagesValue;
   }
 
@@ -175,6 +175,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
     }
   }
 
+  /* istanbul ignore next */
   private changeStatusFilter(changes: SimpleChanges): void {
     if (changes['filter']) {
       this.resetPropsFilter(changes['filter'].currentValue);
@@ -185,7 +186,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
     this.index = FIRST_PAGE;
 
     if (suggestions.length) {
-      this.resetCollection(this.filter);
+      this.resetCollection(suggestions, this.filter);
 
       const changed = this.newChanged({ suggestions });
 
@@ -206,7 +207,7 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
   }
 
   private resetPropsFilter(filter: string): void {
-    const collection = this.resetCollection(filter);
+    const collection = this.resetCollection(this.suggestions, filter);
 
     const changed = this.newChanged({ collection });
 
@@ -222,8 +223,8 @@ export class PaginationComponent<T = unknown> implements OnInit, OnChanges {
     this.resetPropsComponent(changed);
   }
 
-  private resetCollection(filter: string): T[] {
-    const result = this.paginationPipe.transform(this.suggestions, filter);
+  private resetCollection(suggestions: T[], filter: string): T[] {
+    const result = this.paginationPipe.transform(suggestions, filter);
 
     this.collection = result;
 

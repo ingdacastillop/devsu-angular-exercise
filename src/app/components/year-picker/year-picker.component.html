@@ -4,7 +4,9 @@
 >
   <div class="year-picker__header">
     <div class="year-picker__action year-picker__action--prev">
-      <button [disabled]="isPrevDisabled" (click)="onClickPrev()"></button>
+      <button [disabled]="isPrevDisabled" (click)="onClickPrev()">
+        <icon value="arrow-ios-left"></icon>
+      </button>
     </div>
 
     <div class="year-picker__title">
@@ -12,7 +14,9 @@
     </div>
 
     <div class="year-picker__action year-picker__action--next">
-      <button [disabled]="isNextDisabled" (click)="onClickNext()"></button>
+      <button [disabled]="isNextDisabled" (click)="onClickNext()">
+        <icon value="arrow-ios-right"></icon>
+      </button>
     </div>
   </div>
 

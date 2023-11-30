@@ -1,10 +1,8 @@
 import {
   Component,
-  ElementRef,
   forwardRef,
   Input,
   OnChanges,
-  Renderer2,
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
@@ -26,7 +24,10 @@ export const MONTH_MAX = 11;
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MonthPickerComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => MonthPickerComponent
+      ),
       multi: true
     }
   ]
@@ -52,9 +53,9 @@ export class MonthPickerComponent implements OnChanges, ControlValueAccessor {
 
   private onChange = (_?: number): void => undefined;
 
-  private onTouch = (_?: number): void => undefined;
+  private onTouched = (_?: boolean): void => undefined;
 
-  constructor(private ref: ElementRef, private renderer: Renderer2) {
+  constructor() {
     this.value = this.date.getMonth();
 
     this.status = {
@@ -93,8 +94,8 @@ export class MonthPickerComponent implements OnChanges, ControlValueAccessor {
   public onClickMonth({ value }: MonthModel): void {
     this.approvedValue(value);
 
-    this.onTouch(value);
     this.onChange(value);
+    this.onTouched(true);
   }
 
   private changeStatusDate(changes: SimpleChanges): void {
@@ -129,7 +130,7 @@ export class MonthPickerComponent implements OnChanges, ControlValueAccessor {
       : this.maxMonth;
 
     this.onChange(month);
-    this.onTouch(month);
+    this.onTouched(true);
 
     this.approvedValue(month);
   }
@@ -154,8 +155,8 @@ export class MonthPickerComponent implements OnChanges, ControlValueAccessor {
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: number) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {

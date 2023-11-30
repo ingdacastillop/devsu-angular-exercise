@@ -19,6 +19,18 @@ year-picker {
       padding: 0.5rem 0.75rem;
       color: var(--color-devsu-500);
       background: var(--background-devsu-100);
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent !important;
+        padding: 0rem;
+
+        &:hover:not(:disabled) {
+          cursor: pointer;
+        }
+      }
     }
 
     &__title {

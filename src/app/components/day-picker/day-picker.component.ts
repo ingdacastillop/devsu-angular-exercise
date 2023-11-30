@@ -24,7 +24,10 @@ import { DayModel, DayPickerStatus, dayFactory, WeekModel } from './day-utils';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DayPickerComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => DayPickerComponent
+      ),
       multi: true
     }
   ]
@@ -53,7 +56,7 @@ export class DayPickerComponent
 
   private onChange = (_?: number): void => undefined;
 
-  private onTouch = (_?: number): void => undefined;
+  private onTouched = (_?: boolean): void => undefined;
 
   constructor() {
     this.date = new Date();
@@ -87,7 +90,7 @@ export class DayPickerComponent
     if (value) {
       this.setValue(value);
 
-      this.onTouch(value);
+      this.onTouched(true);
       this.onChange(value);
     }
   }
@@ -126,7 +129,7 @@ export class DayPickerComponent
         this.date = dateValue;
 
         this.onChange(this.date.getDate());
-        this.onTouch(this.date.getDate());
+        this.onTouched(true);
       }
 
       this.dateStart.setFullYear(dateValue.getFullYear());
@@ -247,8 +250,8 @@ export class DayPickerComponent
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: number) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {

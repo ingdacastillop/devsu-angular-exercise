@@ -2,13 +2,6 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ListFieldElement } from './list-field-element';
 
-const maxPositionVisible = 4;
-const listSizeRem = 16;
-const elementSizeRem = 4;
-const baseSizePx = 16;
-const elementSizePx = baseSizePx * elementSizeRem;
-const maxListSizePx = baseSizePx * listSizeRem;
-
 interface ListFieldStatus {
   active: boolean;
   hide: boolean;
@@ -28,7 +21,7 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
   public placeholder = '';
 
   @Input()
-  public suggestions: Array<ListFieldElement> = [];
+  public suggestions: ListFieldElement[] = [];
 
   @Input()
   public sheetMode = false;
@@ -41,10 +34,6 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
 
   private declare elements: NodeListOf<HTMLElement>;
 
-  private positionElement = 0;
-
-  protected higher = true;
-
   protected value?: ListFieldElement;
 
   protected suggestion = '';
@@ -53,7 +42,7 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
 
   protected onChange = (_?: unknown): void => undefined;
 
-  protected onTouch = (_?: unknown): void => undefined;
+  protected onTouched = (_?: boolean): void => undefined;
 
   constructor(protected ref: ElementRef) {
     this.status = {
@@ -74,10 +63,6 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
     this.inputElement = this.ref.nativeElement.querySelector('input');
 
     this.listElement = this.ref.nativeElement.querySelector('.list-field__ul');
-  }
-
-  public get isHigher(): boolean {
-    return this.higher && !this.sheetMode;
   }
 
   public onBlur(): void {
@@ -111,6 +96,7 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
   protected hideSuggestions(): void {
     if (!this.status.disabled) {
       this.setVisibleSuggestions(false);
+      this.onTouched(true);
     }
   }
 
@@ -122,102 +108,12 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
   protected setDefineValue(element: ListFieldElement): void {
     this.setValue(element);
 
-    this.onTouch(element.value);
     this.onChange(element.value);
   }
 
   protected setValue(element?: ListFieldElement): void {
     this.value = element;
     this.suggestion = element?.description || '';
-  }
-
-  protected navigationInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'ArrowUp':
-        if (this.status.show && this.isHigher) {
-          this.navigationInputUp();
-        }
-        break;
-
-      case 'ArrowDown':
-        if (this.status.show && !this.isHigher) {
-          this.navigationInputDown();
-        }
-        break;
-    }
-  }
-
-  protected navigationElement(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'ArrowUp':
-        this.navigationElementUp();
-        break;
-
-      case 'ArrowDown':
-        this.navigationElementDown();
-        break;
-    }
-  }
-
-  protected navigationInputUp(): void {
-    this.elements = this.listElement?.querySelectorAll('.list-field__element');
-
-    if (this.elements?.length) {
-      this.positionElement = this.elements?.length - 1;
-
-      this.elements?.item(this.positionElement).focus();
-
-      if (this.positionElement > maxPositionVisible) {
-        const elementPosition = this.elements?.length - maxPositionVisible;
-
-        setTimeout(() => {
-          this.listElement?.scroll({
-            top: elementSizePx * elementPosition,
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
-    }
-  }
-
-  protected navigationInputDown(): void {
-    this.elements = this.listElement?.querySelectorAll('.list-field__element');
-
-    if (this.elements?.length) {
-      this.positionElement = 0;
-
-      this.elements?.item(this.positionElement).focus();
-
-      setTimeout(() => {
-        this.listElement?.scroll({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }, 100);
-    }
-  }
-
-  protected navigationElementUp(): void {
-    if (this.positionElement > 0) {
-      this.positionElement--;
-
-      this.elements?.item(this.positionElement).focus();
-    } else if (!this.isHigher) {
-      this.inputElement?.focus();
-    }
-  }
-
-  protected navigationElementDown(): void {
-    const newPosition = this.positionElement + 1;
-    const length = this.elements?.length || 0;
-
-    if (newPosition < length) {
-      this.positionElement = newPosition;
-
-      this.elements?.item(this.positionElement).focus();
-    } else if (this.isHigher) {
-      this.inputElement?.focus();
-    }
   }
 
   private setDisabled(disabled: boolean): void {
@@ -244,8 +140,8 @@ export class ListFieldComponent implements OnInit, ControlValueAccessor {
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: unknown) => void): void {
-    this.onTouch = onTouch;
+  public registerOnTouched(onTouched: (value?: boolean) => void): void {
+    this.onTouched = onTouched;
   }
 
   public setDisabledState(disabled: boolean): void {
