@@ -5,6 +5,12 @@ import {
   InputType
 } from '../input-field/input-field.component';
 
+const ERROR_MESSAGES: Record<string, string> = {
+  required: 'Campo inválido',
+  minlength: 'Campo no cumple con el mínimo de caracteres',
+  maxlength: 'Campo excede caracteres permitidos'
+};
+
 @Component({
   selector: 'text-field',
   templateUrl: './text-field.component.html',
@@ -41,5 +47,15 @@ export class TextFieldComponent {
 
   public onStatus(status: InputFieldStatus): void {
     this.status = status;
+  }
+
+  public get errorMessage(): string {
+    if (this.inputControl.errors) {
+      const [errorKey] = Object.keys(this.inputControl.errors);
+
+      return ERROR_MESSAGES[errorKey] || '';
+    }
+
+    return '';
   }
 }

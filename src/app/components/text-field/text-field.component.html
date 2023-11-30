@@ -1,7 +1,7 @@
 <div
   class="box-field__content"
   [class.box-field__content--active]="status.active"
-  [class.box-field__content--error]="status.error"
+  [class.box-field__content--error]="inputControl.invalid && inputControl.touched"
   [class.box-field__content--disabled]="status.disabled || disabled"
 >
   <label class="box-field__label" [for]="elementId">
@@ -24,7 +24,10 @@
     </div>
   </div>
 
-  <div class="box-field__helper box-field__helper--error" *ngIf="status.error">
-    <span>{{ status.error }}</span>
+  <div
+    class="box-field__helper box-field__helper--error"
+    *ngIf="inputControl.invalid && inputControl.touched"
+  >
+    <span>{{ errorMessage }}</span>
   </div>
 </div>

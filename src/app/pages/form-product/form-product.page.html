@@ -4,7 +4,10 @@
   </header>
 
   <section>
-    <text-field [inputControl]="id" [disabled]="!!product">ID</text-field>
+    <div class="text-field-product-id">
+      <text-field [inputControl]="id" [disabled]="!!product">ID</text-field>
+      <label *ngIf="productIdInvalid"> ID no está disponible </label>
+    </div>
 
     <text-field [inputControl]="name">Nombre</text-field>
 
@@ -23,6 +26,8 @@
 
   <footer>
     <button (click)="onReset()">Reiniciar</button>
-    <button (click)="onSubmit()" [disabled]="form.invalid">Enviar</button>
+    <button (click)="onSubmit()" [disabled]="form.invalid || productIdInvalid">
+      Enviar
+    </button>
   </footer>
 </div>

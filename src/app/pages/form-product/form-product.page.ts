@@ -21,7 +21,11 @@ export class FormProductPage implements OnInit, OnDestroy {
 
   protected product?: Product;
 
-  private declare subscription: Subscription;
+  protected productIdInvalid = false;
+
+  private subscriptions: Subscription[] = [];
+
+  private currentTimeout: any;
 
   constructor(
     private router: Router,
@@ -71,8 +75,8 @@ export class FormProductPage implements OnInit, OnDestroy {
       }
     });
 
-    this.subscription = this.releaseDate.valueChanges.subscribe(
-      (releaseDate) => {
+    this.subscriptions.push(
+      this.releaseDate.valueChanges.subscribe((releaseDate) => {
         if (releaseDate) {
           this.revisionDate.setValue(
             changeYear(releaseDate, releaseDate.getFullYear() + 1)
@@ -80,12 +84,28 @@ export class FormProductPage implements OnInit, OnDestroy {
         } else {
           this.revisionDate.setValue(undefined);
         }
-      }
+      })
+    );
+
+    this.subscriptions.push(
+      this.id.valueChanges.subscribe((productId) => {
+        if (this.currentTimeout) {
+          clearTimeout(this.currentTimeout);
+        }
+
+        this.currentTimeout = setTimeout(() => {
+          if (this.id.valid && !this.product) {
+            this.products.verify(productId).then((invalid) => {
+              this.productIdInvalid = invalid;
+            });
+          }
+        }, 1500);
+      })
     );
   }
 
   public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   public get id(): FormControl {

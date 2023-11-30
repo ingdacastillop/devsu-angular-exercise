@@ -6,9 +6,11 @@ export abstract class ProductRepository {
 
   abstract fetchAll(subscriber: (products?: Product[]) => void): Subscription;
 
-  abstract fecthForId(id: string): Observable<Product | undefined>;
+  abstract fecthForId(productId: string): Observable<Product | undefined>;
 
   abstract update(product: Product): Promise<void>;
 
   abstract remove(product: Product): Promise<void>;
+
+  abstract verify(productId: string): Promise<boolean>;
 }

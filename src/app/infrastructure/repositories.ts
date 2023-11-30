@@ -63,11 +63,11 @@ export class RemoteProductRepository implements ProductRepository {
     return this.products$.subscribe(subscriber);
   }
 
-  public fecthForId(id: string): Observable<Product | undefined> {
+  public fecthForId(productId: string): Observable<Product | undefined> {
     return from(this.remote()).pipe(
       switchMap(() => this.products$),
       take(1),
-      map((products) => products?.find((product) => product.id === id))
+      map((products) => products?.find((product) => product.id === productId))
     );
   }
 
@@ -110,6 +110,15 @@ export class RemoteProductRepository implements ProductRepository {
         })
       )
     ).then(() => undefined);
+  }
+
+  public verify(productId: string): Promise<boolean> {
+    return firstValueFrom(
+      this.http.get(`${apiUrl}/verification`, {
+        params: { id: productId },
+        responseType: 'text'
+      })
+    ).then((response) => response === 'true');
   }
 
   private remote(): Promise<Product[]> {

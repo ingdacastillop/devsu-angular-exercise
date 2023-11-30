@@ -4,13 +4,13 @@ import {
   forwardRef,
   Input,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,
-  ValidationErrors,
+  ValidationErrors
 } from '@angular/forms';
 
 export type InputType = 'text' | 'number' | 'password' | 'email';
@@ -30,9 +30,9 @@ export interface InputFieldStatus {
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputFieldComponent),
-      multi: true,
-    },
-  ],
+      multi: true
+    }
+  ]
 })
 export class InputFieldComponent implements ControlValueAccessor {
   @Input()
@@ -59,13 +59,13 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   private onChange = (_?: string): void => undefined;
 
-  private onTouch = (_?: string): void => undefined;
+  private onTouch = (_: boolean): void => undefined;
 
   constructor() {
     this.statusField = {
       active: false,
       disabled: false,
-      error: false,
+      error: false
     };
 
     this.status = new EventEmitter();
@@ -79,30 +79,14 @@ export class InputFieldComponent implements ControlValueAccessor {
   public onBlur(): void {
     this.statusField.active = false;
     this.status.emit(this.statusField);
-    this.checkErrorStatus();
+    this.onTouch(true);
   }
 
   public onInput(event: Event): void {
     const { value } = event.target as HTMLInputElement;
 
     this.input = value;
-
-    this.onTouch(value);
     this.onChange(value);
-
-    if (this.statusField.error) {
-      this.checkErrorStatus();
-    }
-  }
-
-  private checkErrorStatus(): void {
-    this.statusField.error = this.formControl?.invalid || false;
-
-    if (this.statusField.error && this.formControl?.errors) {
-      this.changeMsgError(this.formControl.errors);
-    }
-
-    this.status.emit(this.statusField);
   }
 
   private changeMsgError(errors: ValidationErrors): void {
@@ -123,7 +107,7 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouch: (value?: string) => void): void {
+  public registerOnTouched(onTouch: (value: boolean) => void): void {
     this.onTouch = onTouch;
   }
 

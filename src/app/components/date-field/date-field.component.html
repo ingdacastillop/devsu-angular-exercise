@@ -1,7 +1,7 @@
 <div
   class="box-field__content"
-  [class.box-field--active]="status.active"
-  [class.box-field--disabled]="!enabled || status.disabled"
+  [class.box-field__content--active]="status.active"
+  [class.box-field__content--disabled]="isDisabled"
   [class.date-field--selected]="!!value"
 >
   <label class="box-field__label" [for]="elementId" *ngIf="label">
@@ -22,7 +22,11 @@
         (keydown)="onKeydownInput($event)"
       />
 
-      <button class="date-field__action" (click)="onClickAction()">
+      <button
+        class="date-field__action"
+        (click)="onClickAction()"
+        *ngIf="!isDisabled"
+      >
         <icon [value]="iconAction"></icon>
       </button>
     </div>

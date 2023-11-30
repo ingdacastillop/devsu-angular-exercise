@@ -44,4 +44,19 @@ form-product-page {
       }
     }
   }
+
+  .text-field-product-id {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+
+    & > label {
+      padding: 0rem 0.5rem;
+      box-sizing: border-box;
+      font-size: 0.575rem;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      color: var(--color-danger-500);
+    }
+  }
 }

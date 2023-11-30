@@ -163,12 +163,13 @@ input {
     color: var(--color-danger-500);
     padding: 0rem 0.625rem;
     box-sizing: border-box;
-    margin-top: var(--sizing-4);
+    margin-top: 0.25rem;
     font-weight: 500;
-    font-size: 0.5rem;
+    font-size: 0.575rem;
     letter-spacing: 0.05em;
     min-height: 0.625rem;
     line-height: 0.625rem;
+    float: left;
   }
 }
 
