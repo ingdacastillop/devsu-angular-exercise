@@ -24,6 +24,9 @@ export class TextFieldComponent {
   @Input()
   public placeholder = '';
 
+  @Input()
+  public disabled = false;
+
   protected status: InputFieldStatus;
 
   constructor() {

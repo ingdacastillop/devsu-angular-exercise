@@ -1,8 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, take } from 'rxjs';
 import { Product } from '../../domain/entities';
 import { ProductRepository } from '../../domain/repositories';
+import { changeYear } from '@xofttion/utils';
 
 @Component({
   selector: 'form-product-page',
@@ -10,12 +12,22 @@ import { ProductRepository } from '../../domain/repositories';
   styleUrls: ['./form-product.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FormProductPage {
+export class FormProductPage implements OnInit, OnDestroy {
+  public revisionDate: FormControl;
+
   protected today = new Date();
 
   protected form: FormGroup;
 
-  constructor(private router: Router, private products: ProductRepository) {
+  protected product?: Product;
+
+  private declare subscription: Subscription;
+
+  constructor(
+    private router: Router,
+    private activateRoute: ActivatedRoute,
+    private products: ProductRepository
+  ) {
     this.form = new FormGroup({
       id: new FormControl(null, [
         Validators.required,
@@ -33,9 +45,47 @@ export class FormProductPage {
         Validators.maxLength(200)
       ]),
       logo: new FormControl(null, [Validators.required]),
-      releaseDate: new FormControl(null, [Validators.required]),
-      revisionDate: new FormControl(null, [Validators.required])
+      releaseDate: new FormControl(null, [Validators.required])
     });
+
+    this.revisionDate = new FormControl(null, [Validators.required]);
+  }
+
+  public ngOnInit(): void {
+    this.activateRoute.queryParams.pipe(take(1)).subscribe((value) => {
+      const productId = value['id'];
+
+      if (productId) {
+        this.products.fecthForId(productId).subscribe((product) => {
+          if (product) {
+            this.id.setValue(product.id);
+            this.name.setValue(product.name);
+            this.description.setValue(product.description);
+            this.logo.setValue(product.logo);
+            this.releaseDate.setValue(product.releaseDate);
+            this.revisionDate.setValue(product.revisionDate);
+          }
+
+          this.product = product;
+        });
+      }
+    });
+
+    this.subscription = this.releaseDate.valueChanges.subscribe(
+      (releaseDate) => {
+        if (releaseDate) {
+          this.revisionDate.setValue(
+            changeYear(releaseDate, releaseDate.getFullYear() + 1)
+          );
+        } else {
+          this.revisionDate.setValue(undefined);
+        }
+      }
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public get id(): FormControl {
@@ -58,10 +108,6 @@ export class FormProductPage {
     return this.form.get('releaseDate') as FormControl;
   }
 
-  public get revisionDate(): FormControl {
-    return this.form.get('revisionDate') as FormControl;
-  }
-
   public onSubmit(): void {
     const product = new Product(
       this.id.value,
@@ -74,8 +120,10 @@ export class FormProductPage {
 
     this.onDisabledControls(true);
 
-    this.products
-      .register(product)
+    (!this.product
+      ? this.products.register(product)
+      : this.products.update(product)
+    )
       .then(() => {
         this.router.navigateByUrl('/catalog');
       })
@@ -83,6 +131,7 @@ export class FormProductPage {
   }
 
   public onReset(): void {
+    this.product = undefined;
     this.form.reset();
   }
 

@@ -3,7 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Product } from '../domain/entities';
 import { ProductRepository } from '../domain/repositories';
-import { firstValueFrom, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  firstValueFrom,
+  from,
+  map,
+  switchMap,
+  take,
+  tap
+} from 'rxjs';
 
 const apiUrl = environment.apiUrl;
 
@@ -18,9 +28,13 @@ interface ProductResponse {
 
 @Injectable({ providedIn: 'root' })
 export class RemoteProductRepository implements ProductRepository {
-  private products?: Product[];
+  private products$: BehaviorSubject<Product[] | undefined>;
 
-  constructor(private http: HttpClient) {}
+  private promiseProducts?: Promise<Product[]>;
+
+  constructor(private http: HttpClient) {
+    this.products$ = new BehaviorSubject<Product[] | undefined>(undefined);
+  }
 
   public register(product: Product): Promise<void> {
     return firstValueFrom(
@@ -35,42 +49,94 @@ export class RemoteProductRepository implements ProductRepository {
         })
         .pipe(
           tap(() => {
-            this.products?.push(product);
+            if (this.products$.value) {
+              this.products$.next([...this.products$.value, product]);
+            }
           })
         )
     );
   }
 
-  public fetchAll(): Promise<Product[]> {
-    if (this.products) {
-      return Promise.resolve(this.products);
-    }
+  public fetchAll(subscriber: (value?: Product[]) => void): Subscription {
+    this.remote();
 
-    return firstValueFrom(
-      this.http.get<ProductResponse[]>(apiUrl).pipe(
-        map((responses) =>
-          responses.map(
-            (response) =>
-              new Product(
-                response.id,
-                response.name,
-                response.description,
-                response.logo,
-                new Date(response.date_release),
-                new Date(response.date_revision)
-              )
-          )
-        ),
-        tap((products) => (this.products = products))
-      )
+    return this.products$.subscribe(subscriber);
+  }
+
+  public fecthForId(id: string): Observable<Product | undefined> {
+    return from(this.remote()).pipe(
+      switchMap(() => this.products$),
+      take(1),
+      map((products) => products?.find((product) => product.id === id))
     );
   }
 
   public update(product: Product): Promise<void> {
-    throw new Error('Method not implemented.');
+    return firstValueFrom(
+      this.http
+        .put<void>(apiUrl, {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          logo: product.logo,
+          date_release: product.releaseDateFormat,
+          date_revision: product.revisionDateFormat
+        })
+        .pipe(
+          tap(() => {
+            if (this.products$.value) {
+              this.products$.next(
+                this.products$.value.map((currentProduct) =>
+                  currentProduct.id === product.id ? product : currentProduct
+                )
+              );
+            }
+          })
+        )
+    );
   }
 
-  public remove(product: Product): Promise<void> {
-    throw new Error('Method not implemented.');
+  public remove({ id }: Product): Promise<void> {
+    return firstValueFrom(
+      this.http.delete(apiUrl, { params: { id }, responseType: 'text' }).pipe(
+        tap(() => {
+          if (this.products$.value) {
+            const products = this.products$.value.filter(
+              (currentProduct) => currentProduct.id !== id
+            );
+
+            this.products$.next(products);
+          }
+        })
+      )
+    ).then(() => undefined);
+  }
+
+  private remote(): Promise<Product[]> {
+    if (!this.promiseProducts) {
+      this.promiseProducts = firstValueFrom(
+        this.http.get<ProductResponse[]>(apiUrl).pipe(
+          map((responses) =>
+            responses.map(
+              (response) =>
+                new Product(
+                  response.id,
+                  response.name,
+                  response.description,
+                  response.logo,
+                  new Date(response.date_release),
+                  new Date(response.date_revision)
+                )
+            )
+          ),
+          tap((products) => this.products$.next(products))
+        )
+      ).catch((err) => {
+        this.promiseProducts = undefined;
+        throw err;
+      });
+    }
+
+    return this.promiseProducts;
   }
 }

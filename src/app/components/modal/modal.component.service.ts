@@ -5,7 +5,7 @@ import {
   OverlayElement,
   OverlayComponent,
   OverlayService
-} from './overlay';
+} from '../overlay';
 import { ModalComponent } from './modal.component';
 
 @Injectable({ providedIn: 'root' })

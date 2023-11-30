@@ -9,10 +9,10 @@ describe('InputFieldComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [InputFieldComponent]
     }).compileComponents();
-  });
 
-  fixture = TestBed.createComponent(InputFieldComponent);
-  component = fixture.componentInstance;
+    fixture = TestBed.createComponent(InputFieldComponent);
+    component = fixture.componentInstance;
+  });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();

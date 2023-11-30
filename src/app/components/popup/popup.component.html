@@ -1,0 +1,34 @@
+<div class="popup__content" [class.popup__content--visible]="visible">
+  <div class="popup__component" [class.popup__component--visible]="visible">
+    <div class="popup__header">
+      <div class="popup__header__title label-bold">
+        {{ config?.title }}
+      </div>
+      <div
+        class="popup__header__subtitle smalltext-bold"
+        *ngIf="config?.subtitle"
+      >
+        {{ config?.subtitle }}
+      </div>
+    </div>
+
+    <div class="popup__body">
+      <p
+        class="popup__body__message body-medium"
+        [innerHtml]="config?.message"
+      ></p>
+    </div>
+
+    <div class="popup__footer">
+      <button class="popup__footer--reject" *ngIf="config?.reject" (click)="onReject()">
+        <span>{{ config?.reject?.label }}</span>
+      </button>
+
+      <button (click)="onApproved()">
+        <span>{{ config?.approved?.label || 'Aceptar' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="popup__backdrop" [class.popup__backdrop--visible]="visible"></div>
+</div>

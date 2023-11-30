@@ -1,6 +1,7 @@
 <header>
   <div class="catalog-products__search">
     <input-field placeholder="Search..." [formControl]="filterControl">
+      {{filterControl.value}}
     </input-field>
   </div>
 
@@ -28,11 +29,26 @@
         <td>{{product.releaseDateFormat}}</td>
         <td>{{product.revisionDateFormat}}</td>
         <td class="action">
-          <icon value="more-vertical"></icon>
+          <icon
+            value="more-vertical"
+            (click)="onClickAction(product, $event)"
+          ></icon>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div
+    class="catalog-products__dropdown"
+    [hidden]="!dropdown"
+    [ngStyle]="dropdownPosition"
+  >
+    <ul>
+      <li (click)="onUpdateProduct()">Editar producto</li>
+      <li (click)="onRemoveProduct()">Eliminar producto</li>
+      <li (click)="onCloseDropdown()">Cerrar</li>
+    </ul>
+  </div>
 </section>
 
 <footer>

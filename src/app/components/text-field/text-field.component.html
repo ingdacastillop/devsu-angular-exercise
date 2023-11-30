@@ -2,7 +2,7 @@
   class="box-field__content"
   [class.box-field__content--active]="status.active"
   [class.box-field__content--error]="status.error"
-  [class.box-field__content--disabled]="status.disabled"
+  [class.box-field__content--disabled]="status.disabled || disabled"
 >
   <label class="box-field__label" [for]="elementId">
     <ng-content></ng-content>
@@ -17,6 +17,7 @@
         [placeholder]="placeholder"
         (status)="onStatus($event)"
         [formControl]="inputControl"
+        [readonly]="disabled"
       >
         {{ inputControl.value }}
       </input-field>

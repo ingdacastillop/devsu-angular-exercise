@@ -4,6 +4,7 @@ import {
   IconComponentModule,
   InputFieldComponentModule,
   PaginationComponentModule,
+  PopupComponentModule,
   SelectFieldComponentModule
 } from '../../components';
 import { CatalogProductsPage } from './catalog-products.page';
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputFieldComponentModule,
     IconComponentModule,
     SelectFieldComponentModule,
-    PaginationComponentModule
+    PaginationComponentModule,
+    PopupComponentModule
   ],
   exports: [CatalogProductsPage]
 })

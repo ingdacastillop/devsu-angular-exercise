@@ -21,6 +21,36 @@ catalog-products-page {
       border-radius: 0.5rem;
       box-shadow: var(--shadow-devsu-4);
     }
+
+    &__dropdown {
+      position: absolute;
+      z-index: 4;
+      border-radius: 0.5rem;
+      min-width: 12rem;
+      background: var(--background-devsu-500);
+      box-shadow: var(--shadow-devsu-4);
+      transform: translateX(-100%);
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0.75rem;
+        box-sizing: border-box;
+
+        li {
+          padding: 0.25rem 0.5rem;
+          font-weight: 500;
+          height: 2rem;
+          line-height: 2rem;
+          border-radius: 0.25rem;
+          cursor: default;
+
+          &:hover {
+            background: var(--background-devsu-300);
+          }
+        }
+      }
+    }
   }
 
   table {

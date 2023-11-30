@@ -4,7 +4,7 @@
   </header>
 
   <section>
-    <text-field [inputControl]="id">ID</text-field>
+    <text-field [inputControl]="id" [disabled]="!!product">ID</text-field>
 
     <text-field [inputControl]="name">Nombre</text-field>
 
@@ -16,11 +16,7 @@
       Fecha de liberación
     </date-field>
 
-    <date-field
-      [formControl]="revisionDate"
-      [minDate]="releaseDate.value"
-      [enabled]="releaseDate.value"
-    >
+    <date-field [formControl]="revisionDate" [enabled]="false">
       Fecha de revisión
     </date-field>
   </section>
