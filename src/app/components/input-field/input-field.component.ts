@@ -29,7 +29,10 @@ export interface InputFieldStatus {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputFieldComponent),
+      useExisting: forwardRef(
+        /* istanbul ignore next */
+        () => InputFieldComponent
+      ),
       multi: true
     }
   ]
@@ -59,7 +62,7 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   private onChange = (_?: string): void => undefined;
 
-  private onTouch = (_: boolean): void => undefined;
+  private onTouched = (_: boolean): void => undefined;
 
   constructor() {
     this.statusField = {
@@ -79,7 +82,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   public onBlur(): void {
     this.statusField.active = false;
     this.status.emit(this.statusField);
-    this.onTouch(true);
+    this.onTouched(true);
   }
 
   public onInput(event: Event): void {
@@ -87,16 +90,6 @@ export class InputFieldComponent implements ControlValueAccessor {
 
     this.input = value;
     this.onChange(value);
-  }
-
-  private changeMsgError(errors: ValidationErrors): void {
-    const [error] = Object.keys(errors).map((key) => errors[key]);
-
-    let msgError = '';
-
-    if (error) {
-      msgError = error.message;
-    }
   }
 
   public writeValue(value?: string): void {
@@ -108,7 +101,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   public registerOnTouched(onTouch: (value: boolean) => void): void {
-    this.onTouch = onTouch;
+    this.onTouched = onTouch;
   }
 
   public setDisabledState(disabled: boolean): void {

@@ -40,9 +40,6 @@
           *ngFor="let element of suggestions"
           class="list-field__element"
           tabindex="-1"
-          [initials]="element?.initials"
-          [photo]="element?.photo"
-          [subtitle]="element?.subtitle"
           (click)="onSelect(element)"
           (keydown)="onKeydownElement($event, element)"
         >

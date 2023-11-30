@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Product } from '../domain/entities';
-import { ProductRepository } from '../domain/repositories';
 import {
   BehaviorSubject,
   Observable,
@@ -14,6 +11,9 @@ import {
   take,
   tap
 } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Product } from '../domain/entities';
+import { ProductRepository } from '../domain/repositories';
 
 const apiUrl = environment.apiUrl;
 
