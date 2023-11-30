@@ -14,20 +14,20 @@
       <th class="logo">Logo</th>
       <th>Nombre del producto</th>
       <th>Descripción</th>
-      <th>Fecha de liberación</th>
-      <th>Fecha de reestructuración</th>
+      <th class="align-center">Fecha de liberación</th>
+      <th class="align-center">Fecha de reestructuración</th>
       <th class="action"></th>
     </thead>
 
-    <tbody>
+    <tbody *ngIf="catalog else productsEmpty">
       <tr *ngFor="let product of results">
         <td class="logo">
           <img [src]="product.logo" />
         </td>
         <td>{{product.name}}</td>
         <td>{{product.description}}</td>
-        <td>{{product.releaseDateFormat}}</td>
-        <td>{{product.revisionDateFormat}}</td>
+        <td class="align-center">{{product.releaseDateFormat}}</td>
+        <td class="align-center">{{product.revisionDateFormat}}</td>
         <td class="action">
           <icon
             value="more-vertical"
@@ -66,3 +66,34 @@
     </select-field>
   </div>
 </footer>
+
+<ng-template #productsEmpty>
+  <tbody>
+    <tr>
+      <td class="logo"><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td class="action"><div class="skeleton"></div></td>
+    </tr>
+
+    <tr>
+      <td class="logo"><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td class="action"><div class="skeleton"></div></td>
+    </tr>
+
+    <tr>
+      <td class="logo"><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td><div class="skeleton"></div></td>
+      <td class="action"><div class="skeleton"></div></td>
+    </tr>
+  </tbody>
+</ng-template>
