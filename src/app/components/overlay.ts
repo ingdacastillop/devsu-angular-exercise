@@ -19,7 +19,7 @@ export class OverlayElement<E> {
     this.componentRef = this.overlayRef.attach(this.portal);
   }
 
-  public get instace(): E {
+  public get instance(): E {
     return this.componentRef.instance;
   }
 

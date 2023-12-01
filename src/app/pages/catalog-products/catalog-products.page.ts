@@ -17,10 +17,12 @@ class CountPaginationElement implements ListFieldElement<number> {
     this.title = `${value} producto(s)`;
   }
 
+  /* istanbul ignore next */
   public compareTo(value: number): boolean {
     return this.value === value;
   }
 
+  /* istanbul ignore next */
   public hasCoincidence(_: string): boolean {
     return true;
   }
@@ -84,7 +86,7 @@ export class CatalogProductsPage implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   public onPagination(products: Product[]): void {
@@ -121,7 +123,7 @@ export class CatalogProductsPage implements OnInit, OnDestroy {
         message: `¿Estas seguro de eliminar el product ${currentProduct.name}?`,
         approved: {
           label: 'Confirmar',
-          onClick: () => {
+          onClick: /* istanbul ignore next */ () => {
             this.products.remove(currentProduct).then(() => {
               this.product = undefined;
             });

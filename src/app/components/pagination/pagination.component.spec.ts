@@ -44,7 +44,7 @@ describe('PaginationComponent', () => {
     expect(component.value.length).toBe(0);
   });
 
-  it('', () => {
+  it('should move in pages', () => {
     const suggestions = new SimpleChange(null, countries, true);
     const count = new SimpleChange(null, 3, true);
 

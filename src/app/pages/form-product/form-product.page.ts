@@ -128,7 +128,7 @@ export class FormProductPage implements OnInit, OnDestroy {
     return this.form.get('releaseDate') as FormControl;
   }
 
-  public onSubmit(): void {
+  public onSubmit(): Promise<void> {
     const product = new Product(
       this.id.value,
       this.name.value,
@@ -140,9 +140,10 @@ export class FormProductPage implements OnInit, OnDestroy {
 
     this.onDisabledControls(true);
 
-    (!this.product
-      ? this.products.register(product)
-      : this.products.update(product)
+    return (
+      !this.product
+        ? this.products.register(product)
+        : this.products.update(product)
     )
       .then(() => {
         this.router.navigateByUrl('/catalog');
